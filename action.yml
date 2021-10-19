@@ -1,0 +1,89 @@
+name: 'Configure GPG'
+
+inputs:
+  custom-tag:
+    description: 'Optional tag for new release'
+    required: false
+    
+  github-access-token:
+    description: 'Github access token'
+    required: true
+
+  github-access-token-reviewer:
+    description: 'Github access token for a reviewer'
+    required: true
+  
+runs:
+  using: "composite"
+  steps:
+
+    - name: Install NPM Packages
+      shell: bash
+      run: npm i -g standard-version@9.3.1 extract-changelog-release@1.0.2
+  
+    - name: Generate tag and changelog
+      shell: bash
+      id: generate-changelog
+      run: |
+        git checkout -B release/${GITHUB_SHA}
+        if [ "${{ inputs.custom-tag }}" == "" ]; then
+          npx standard-version --no-verify
+        else
+          npx standard-version --no-verify --release-as $CUSTOM_TAG
+        fi
+        TAG=$(git describe --tags)
+        echo "::set-output name=TAG::$TAG"
+
+    - name: Create release branch
+      shell: bash
+      run: |
+        git branch -M release/${{ steps.generate-changelog.outputs.TAG }}
+        git push --set-upstream origin HEAD:release/${{ steps.generate-changelog.outputs.TAG }}
+
+    - name: Create a merge PR for release, authenticated as machine user
+      shell: bash
+      run: |
+        echo ${{ inputs.github-access-token }} | gh auth login --with-token
+        gh pr create -a @me -t "Create new release ${{ steps.generate-changelog.outputs.TAG }}" -f
+
+    - name: Approve the PR so PR merge checks are OK, authenticated as reviewer
+      shell: bash
+      run: |
+        echo ${{ inputs.github-access-token-reviewer }} | gh auth login --with-token
+        gh pr review --approve
+
+    - name: Merge the approved PR, authenticated as machine user
+      shell: bash
+      run: |
+        echo ${{ inputs.github-access-token }} | gh auth login --with-token
+        gh pr merge release/${{ steps.generate-changelog.outputs.TAG }} -s
+
+    - name: Clean and push tag
+      shell: bash
+      run: |
+        git fetch
+        git checkout main
+        git rebase origin/main
+        git branch -D release/${{ steps.generate-changelog.outputs.TAG }}
+        EXISTS=$(git ls-remote 2>/dev/null | grep release/${{ steps.generate-changelog.outputs.TAG }} | wc -l)
+        if [[ "$EXISTS" != "0" ]]; then
+          git push origin :release/${{ steps.generate-changelog.outputs.TAG }}
+        fi
+        git push --follow-tags
+
+    - name: Extract changelog release
+      shell: bash
+      run: |
+        npx extract-changelog-release > RELEASE_BODY.md
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-access-token }}
+      with:
+        tag_name: ${{ steps.generate-changelog.outputs.TAG }}
+        release_name: ${{ steps.generate-changelog.outputs.TAG }}
+        body_path: RELEASE_BODY.md
+        draft: false
+        prerelease: false
