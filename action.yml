@@ -1,4 +1,10 @@
-name: 'Configure GPG'
+name: 'Create git release with conventional changelog'
+
+description: This action create a nice and clean github release leveraging git conventional commit best practices
+
+branding:
+  icon: 'code'  
+  color: 'purple'
 
 inputs:
   custom-tag:
