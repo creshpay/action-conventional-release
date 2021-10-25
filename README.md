@@ -47,7 +47,7 @@ steps:
 * **github-access-token-reviewer** - required
 
   Access token for a reviewer. You can provide `${{ github.token }}` so Github Actions App user will be the reviewer.
-  
+
   This aim to be able to merge PR with 1 reviewer requested without having to give admin role for your machine user
 
 * **custom-tag** - optional
@@ -55,6 +55,10 @@ steps:
   The action allow you to override the generated tag. You have to specify a semver compliant version and the tag should not exists in your repository.
 
   Example of custom tag: `0.0.5`, `2.0.2`
+
+* **delete-release-branch** - optional - default 0
+
+  Enable or disable release branch deletion. 1 for delete, 0 to keep it
 
 ### Limitations
 
