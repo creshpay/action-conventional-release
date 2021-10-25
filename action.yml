@@ -1,32 +1,36 @@
-name: 'Create git release with conventional changelog'
+name: "Create git release with conventional changelog"
 
 description: This action create a nice and clean github release leveraging git conventional commit best practices
 
 branding:
-  icon: 'code'  
-  color: 'purple'
+  icon: "code"
+  color: "purple"
 
 inputs:
   custom-tag:
-    description: 'Optional tag for new release'
+    description: "Optional tag for new release"
     required: false
-    
+
   github-access-token:
-    description: 'Github access token'
+    description: "Github access token"
     required: true
 
   github-access-token-reviewer:
-    description: 'Github access token for a reviewer'
+    description: "Github access token for a reviewer"
     required: true
-  
+
+  delete-release-branch:
+    description: "Trigger deletion of release branch"
+    required: false
+    default: "0"
+
 runs:
   using: "composite"
   steps:
-
     - name: Install NPM Packages
       shell: bash
       run: npm i -g standard-version@9.3.1 extract-changelog-release@1.0.2
-  
+
     - name: Generate tag and changelog
       shell: bash
       id: generate-changelog
@@ -70,10 +74,12 @@ runs:
         git fetch
         git checkout main
         git rebase origin/main
-        git branch -D release/${{ steps.generate-changelog.outputs.TAG }}
-        EXISTS=$(git ls-remote 2>/dev/null | grep release/${{ steps.generate-changelog.outputs.TAG }} | wc -l)
-        if [[ "$EXISTS" != "0" ]]; then
-          git push origin :release/${{ steps.generate-changelog.outputs.TAG }}
+        if [[ "${{ inputs.delete-release-branch }}" != "0" ]]; then
+          git branch -D release/${{ steps.generate-changelog.outputs.TAG }}
+          EXISTS=$(git ls-remote 2>/dev/null | grep release/${{ steps.generate-changelog.outputs.TAG }} | wc -l)
+          if [[ "$EXISTS" != "0" ]]; then
+            git push origin :release/${{ steps.generate-changelog.outputs.TAG }}
+          fi
         fi
         git push --follow-tags
 
