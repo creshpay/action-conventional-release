@@ -81,6 +81,9 @@ runs:
             git push origin :release/${{ steps.generate-changelog.outputs.TAG }}
           fi
         fi
+        TAG_MESSAGE=$(git tag -l --format='%(contents)' ${{ steps.generate-changelog.outputs.TAG }})
+        git tag -d ${{ steps.generate-changelog.outputs.TAG }}
+        git tag -m "${TAG_MESSAGE}" "${{ steps.generate-changelog.outputs.TAG }}"
         git push --follow-tags
 
     - name: Extract changelog release
