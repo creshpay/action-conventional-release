@@ -62,6 +62,10 @@ runs:
         echo ${{ inputs.github-access-token-reviewer }} | gh auth login --with-token
         gh pr review --approve
 
+    - name: Sleep for 5 seconds so PR can be merged successfully
+      shell: bash
+      run: sleep 5s
+
     - name: Merge the approved PR, authenticated as machine user
       shell: bash
       run: |
