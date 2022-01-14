@@ -39,7 +39,7 @@ runs:
         if [ "${{ inputs.custom-tag }}" == "" ]; then
           npx standard-version --no-verify
         else
-          npx standard-version --no-verify --release-as $CUSTOM_TAG
+          npx standard-version --no-verify --release-as ${{ inputs.custom-tag }}
         fi
         TAG=$(git describe --tags)
         echo "::set-output name=TAG::$TAG"
