@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/cresh-io/action-conventional-release/compare/v1.2.1...v1.2.2) (2022-01-14)
+
+
+### Bug Fixes
+
+* fix custom tag value when custom tag sent ([66c27a3](https://github.com/cresh-io/action-conventional-release/commit/66c27a35aa12286964be144052e0046a2f8ab226))
+
 ### [1.2.1](https://github.com/cresh-io/action-conventional-release/compare/v1.2.0...v1.2.1) (2021-11-24)
 
 
