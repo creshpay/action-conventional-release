@@ -56,6 +56,17 @@ runs:
         echo ${{ inputs.github-access-token }} | gh auth login --with-token
         gh pr create -a @me -t "Create new release ${{ steps.generate-changelog.outputs.TAG }}" -f
 
+    - name: Wait until the PR is created
+      shell: bash
+      run: |
+        while true; do
+          N=$(gh pr list -H release/${{ steps.generate-changelog.outputs.TAG }} --json id -q '.[].id' | wc -l)
+          if [ $N -gt 0 ]; then
+              break
+          fi
+          sleep 1
+        done
+
     - name: Approve the PR so PR merge checks are OK, authenticated as reviewer
       shell: bash
       run: |
