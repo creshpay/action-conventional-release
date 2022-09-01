@@ -11,6 +11,11 @@ inputs:
     description: "Optional tag for new release"
     required: false
 
+  base-branch:
+    description: "Base branch to merge on"
+    required: false
+    default: "main"
+
   github-access-token:
     description: "Github access token"
     required: true
@@ -54,7 +59,7 @@ runs:
       shell: bash
       run: |
         echo ${{ inputs.github-access-token }} | gh auth login --with-token
-        gh pr create -a @me -t "Create new release ${{ steps.generate-changelog.outputs.TAG }}" -f
+        gh pr create -a @me -t "Create new release ${{ steps.generate-changelog.outputs.TAG }}" -f -B ${{ inputs.base-branch }}
 
     - name: Wait until the PR is created
       shell: bash
@@ -87,8 +92,8 @@ runs:
       shell: bash
       run: |
         git fetch
-        git checkout main
-        git rebase origin/main
+        git checkout ${{ inputs.base-branch }}
+        git rebase origin/${{ inputs.base-branch }}
         if [[ "${{ inputs.delete-release-branch }}" != "0" ]]; then
           git branch -D release/${{ steps.generate-changelog.outputs.TAG }}
           EXISTS=$(git ls-remote 2>/dev/null | grep release/${{ steps.generate-changelog.outputs.TAG }} | wc -l)
