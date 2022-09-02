@@ -1,4 +1,5 @@
 # Action-conventional-release
+
 This action create a nice and clean github release leveraging git conventional commit best practices
 
 ## Requirement
@@ -36,6 +37,7 @@ steps:
     custom-tag: "${{ github.event.inputs.tags }}"
     github-access-token: "${{ secrets.GITHUB_TOKEN }}"
     github-access-token-reviewer: "${{ github.token }}"
+    base-branch: ${{ github.ref_name }}
 ```
 
 ### Parameters
@@ -60,6 +62,10 @@ steps:
 
   Enable or disable release branch deletion. 1 for delete, 0 to keep it
 
+* **base-branch** - optional - default main
+
+  Specify base branche for merge and release
+
 ### Limitations
 
 If you require more than 1 reviewer you will have to give your machine user admin permissions on the repo.
@@ -68,9 +74,10 @@ If you require more than 1 reviewer you will have to give your machine user admi
 
 This composite action leverage the great works of :
 
-- [standard-version](https://github.com/conventional-changelog/standard-version)
-- [extract-changelog-release](https://github.com/nonara/extract-changelog-release)
-- [create-release](https://github.com/actions/create-release)
+* [standard-version](https://github.com/conventional-changelog/standard-version)
+* [extract-changelog-release](https://github.com/nonara/extract-changelog-release)
+* [create-release](https://github.com/actions/create-release)
 
 ## License
+
 The scripts and documentation in this project are released under the [MIT License](LICENSE)
