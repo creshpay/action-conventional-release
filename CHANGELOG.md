@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/cresh-io/action-conventional-release/compare/v1.2.3...v1.3.0) (2022-09-02)
+
+
+### Features
+
+* allow to change ref branch ([#10](https://github.com/cresh-io/action-conventional-release/issues/10)) ([6f9ee1a](https://github.com/cresh-io/action-conventional-release/commit/6f9ee1a4de79bfe1aed811c5ecf1cc203e7ba85f))
+
 ### [1.2.3](https://github.com/cresh-io/action-conventional-release/compare/v1.2.2...v1.2.3) (2022-01-17)
 
 
