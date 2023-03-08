@@ -47,7 +47,7 @@ runs:
           npx standard-version --no-verify --release-as ${{ inputs.custom-tag }}
         fi
         TAG=$(git describe --tags)
-        echo "::set-output name=TAG::$TAG"
+        echo "TAG=$TAG" >> $GITHUB_OUTPUT
 
     - name: Create release branch
       shell: bash
