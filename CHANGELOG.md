@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/cresh-io/action-conventional-release/compare/v1.3.1...v1.3.2) (2023-03-08)
+
+
+### Chore
+
+* **deps:** bump actions/checkout from 2 to 3 ([#12](https://github.com/cresh-io/action-conventional-release/issues/12)) ([ab1a899](https://github.com/cresh-io/action-conventional-release/commit/ab1a899fcb9cae2d78a4b151df8c683738091e7b)), closes [#11](https://github.com/cresh-io/action-conventional-release/issues/11)
+
 ### [1.3.1](https://github.com/cresh-io/action-conventional-release/compare/v1.3.0...v1.3.1) (2023-03-08)
 
 
