@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/cresh-io/action-conventional-release/compare/v1.3.0...v1.3.1) (2023-03-08)
+
+
+### Chore
+
+* configure standard-version changelog ([701eef7](https://github.com/cresh-io/action-conventional-release/commit/701eef7b2e9bc75818c34d81e105eeadc411d613))
+* enable dependaBot and remove deprecated set-output ([#11](https://github.com/cresh-io/action-conventional-release/issues/11)) ([1132605](https://github.com/cresh-io/action-conventional-release/commit/11326053856f121e9c9f3b5383b780a8317206aa))
+
 ## [1.3.0](https://github.com/cresh-io/action-conventional-release/compare/v1.2.3...v1.3.0) (2022-09-02)
 
 
