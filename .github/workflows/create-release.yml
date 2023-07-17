@@ -17,7 +17,7 @@ jobs:
           token: ${{ secrets.CI_PUSH_TOKEN }}
 
       - name: Enable GPG
-        uses: cresh-io/action-gpg@v1
+        uses: cresh-io/action-gpg@v2
         with:
           gpg-passphrase: "${{ secrets.CI_GPG_PASSPHRASE }}"
           gpg-sign-key: "${{ secrets.CI_GPG_SIGN_KEY }}"
