@@ -22,9 +22,9 @@ steps:
       # The action requires the ful history of the git repo
       fetch-depth: 0
 
-# See https://github.com/cresh-io/action-gpg
+# See https://github.com/creshpay/action-gpg
 - name: Enable GPG
-  uses: cresh-io/action-gpg@v1
+  uses: creshpay/action-gpg@v1
   with:
     gpg-passphrase: "${{ secrets.CI_GPG_PASSPHRASE }}"
     gpg-sign-key: "${{ secrets.CI_GPG_SIGN_KEY }}"
@@ -32,7 +32,7 @@ steps:
     git-username: "${{ secrets.CI_USER_NAME }}"
 
 - name: Create release
-  uses: cresh-io/action-conventional-release@v1
+  uses: creshpay/action-conventional-release@v1
   with:
     custom-tag: "${{ github.event.inputs.tags }}"
     github-access-token: "${{ secrets.GITHUB_TOKEN }}"
